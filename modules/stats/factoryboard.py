@@ -8,6 +8,15 @@ import logging
 
 logger = logging.getLogger(__name__)
 
+def get_display_name(user):
+    """Get display name for user - prefer first_name, then username, then fallback"""
+    if user.get('first_name'):
+        return user['first_name']
+    elif user.get('username'):
+        return f"@{user['username']}"
+    else:
+        return f"user{user['user_id']}"
+
 async def factoryboard_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """View factory leaderboard"""
     user_id = update.effective_user.id
@@ -26,7 +35,8 @@ async def factoryboard_command(update: Update, context: ContextTypes.DEFAULT_TYP
     for idx, factory in enumerate(factories, 1):
         owner = db.get_user(factory['user_id'])
         if owner:
-            board_text += f"{idx}. @{owner['username']}\n"
+            display_name = get_display_name(owner)
+            board_text += f"{idx}. {display_name}\n"
             board_text += f"   Level: {factory.get('level', 1)}\n"
             board_text += f"   Production: {factory.get('production', 0)} units\n"
             board_text += f"   Workers: {factory.get('workers', 0)}\n"
