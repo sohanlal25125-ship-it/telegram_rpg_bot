@@ -17,7 +17,12 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user = db.get_user(user_id)
     
     if user:
-        # Returning user
+        # Returning user - UPDATE first_name and username if they changed
+        db.update_user(user_id, {
+            'first_name': first_name,
+            'username': username
+        })
+        
         keyboard = [
             [
                 InlineKeyboardButton("👤 Profile", callback_data="profile"),
@@ -40,7 +45,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
             reply_markup=InlineKeyboardMarkup(keyboard)
         )
     else:
-        # New user
+        # New user - CREATE with first_name and username
         user_doc = db.create_user(user_id, username, first_name)
         
         keyboard = [
