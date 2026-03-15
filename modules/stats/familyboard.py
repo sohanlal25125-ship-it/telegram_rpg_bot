@@ -8,6 +8,15 @@ import logging
 
 logger = logging.getLogger(__name__)
 
+def get_display_name(user):
+    """Get display name for user - prefer first_name, then username, then fallback"""
+    if user.get('first_name'):
+        return user['first_name']
+    elif user.get('username'):
+        return f"@{user['username']}"
+    else:
+        return f"user{user['user_id']}"
+
 async def familyboard_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """Family leaderboard"""
     user_id = update.effective_user.id
@@ -35,7 +44,8 @@ async def familyboard_command(update: Update, context: ContextTypes.DEFAULT_TYPE
     for idx, fam in enumerate(families[:10], 1):
         user = db.get_user(fam['user_id'])
         if user:
-            board_text += f"{idx}. @{user['username']} - {fam['size']} members\n"
+            display_name = get_display_name(user)
+            board_text += f"{idx}. {display_name} - {fam['size']} members\n"
     
     await update.message.reply_text(board_text, parse_mode="HTML")
     logger.info(f"Family board viewed by {user_id}")
