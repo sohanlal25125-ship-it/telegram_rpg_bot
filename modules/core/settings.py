@@ -2,7 +2,7 @@
 /settings command handler
 """
 from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
-from telegram.ext import ContextTypes, CommandHandler, CallbackQueryHandler
+from telegram.ext import ContextTypes, CommandHandler
 from database import db
 import logging
 
@@ -30,21 +30,4 @@ async def settings_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
         reply_markup=InlineKeyboardMarkup(keyboard)
     )
 
-async def settings_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    """Handle settings callbacks"""
-    query = update.callback_query
-    await query.answer()
-    
-    if query.data == "settings_notifications":
-        keyboard = [
-            [InlineKeyboardButton("✅ On", callback_data="notif_on")],
-            [InlineKeyboardButton("❌ Off", callback_data="notif_off")],
-        ]
-        await query.edit_message_text(
-            "<b>🔔 Notifications</b>\n\nEnable notifications?",
-            parse_mode="HTML",
-            reply_markup=InlineKeyboardMarkup(keyboard)
-        )
-
 settings_handler = CommandHandler('settings', settings_command)
-settings_callback_handler = CallbackQueryHandler(settings_callback, pattern="^settings_")
