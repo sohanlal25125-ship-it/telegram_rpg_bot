@@ -1,6 +1,6 @@
 """
 COMPLETE TELEGRAM RPG BOT - MAIN ENTRY POINT
-All 84+ Commands Fully Registered
+All 84+ Commands Fully Registered + ALL BUTTONS
 """
 import asyncio
 import logging
@@ -135,15 +135,23 @@ from modules.admin.adminstats import adminstats_handler
 from modules.admin.logs import logs_handler
 
 # ============================================================================
-# IMPORT ALL CALLBACK HANDLERS (CENTRALIZED)
+# IMPORT ALL CALLBACK HANDLERS (CENTRALIZED) - NOW COMPLETE!
 # ============================================================================
 
 from modules.callbacks import (
+    start_callback_handler,
     settings_callback_handler,
     shop_callback_handler,
     bank_callback_handler,
     auction_callback_handler,
+    market_callback_handler,
     blackjack_callback_handler,
+    quiz_callback_handler,
+    trivia_callback_handler,
+    weapon_callback_handler,
+    leaderboard_callback_handler,
+    garden_callback_handler,
+    friends_callback_handler,
 )
 
 # ============================================================================
@@ -238,92 +246,4 @@ def main():
     app.add_handler(weather_handler)
     logger.info("✅ GARDEN: 9 commands")
     
-    # MARKET (7)
-    app.add_handler(stand_handler)
-    app.add_handler(stands_handler)
-    app.add_handler(putstand_handler)
-    app.add_handler(trade_handler)
-    app.add_handler(gift_handler)
-    app.add_handler(auction_handler)
-    app.add_handler(bid_handler)
-    logger.info("✅ MARKET: 7 commands")
-    
-    # GAMES (10)
-    app.add_handler(lottery_handler)
-    app.add_handler(blackjack_handler)
-    app.add_handler(slots_handler)
-    app.add_handler(dice_handler)
-    app.add_handler(trivia_handler)
-    app.add_handler(guess_handler)
-    app.add_handler(ripple_handler)
-    app.add_handler(question_handler)
-    app.add_handler(nation_handler)
-    app.add_handler(fourpics_handler)
-    logger.info("✅ GAMES: 10 commands")
-    
-    # STATS (6)
-    app.add_handler(leaderboard_handler)
-    app.add_handler(moneyboard_handler)
-    app.add_handler(familyboard_handler)
-    app.add_handler(factoryboard_handler)
-    app.add_handler(activity_handler)
-    app.add_handler(moneygraph_handler)
-    logger.info("✅ STATS: 6 commands")
-    
-    # ADMIN (5)
-    app.add_handler(ban_handler)
-    app.add_handler(unban_handler)
-    app.add_handler(broadcast_handler)
-    app.add_handler(adminstats_handler)
-    app.add_handler(logs_handler)
-    logger.info("✅ ADMIN: 5 commands")
-    
-    logger.info("")
-    logger.info("=" * 80)
-    logger.info("📝 Registering callback handlers...")
-    logger.info("")
-    
-    # ========================================================================
-    # CALLBACK HANDLERS (INLINE BUTTONS) - NOW CENTRALIZED!
-    # ========================================================================
-    
-    app.add_handler(settings_callback_handler)
-    logger.info("✅ Settings callbacks registered")
-    
-    app.add_handler(shop_callback_handler)
-    logger.info("✅ Shop callbacks registered")
-    
-    app.add_handler(bank_callback_handler)
-    logger.info("✅ Bank callbacks registered")
-    
-    app.add_handler(auction_callback_handler)
-    logger.info("✅ Auction callbacks registered")
-    
-    app.add_handler(blackjack_callback_handler)
-    logger.info("✅ Blackjack callbacks registered")
-    
-    logger.info("")
-    logger.info("=" * 80)
-    logger.info("✅ ALL 84+ COMMAND HANDLERS REGISTERED!")
-    logger.info("✅ ALL CALLBACK HANDLERS REGISTERED!")
-    logger.info("=" * 80)
-    logger.info("")
-    logger.info("📊 SUMMARY:")
-    logger.info("   Core: 6  | Family: 9  | Friends: 5  | Economy: 13")
-    logger.info("   Crime: 8 | Factory: 6 | Garden: 9   | Market: 7")
-    logger.info("   Games: 10| Stats: 6   | Admin: 5")
-    logger.info("   ──────────────────────────────────")
-    logger.info("   📈 TOTAL: 84+ COMMANDS + 5 CALLBACK MODULES")
-    logger.info("")
-    logger.info("🚀 BOT IS RUNNING AND READY!")
-    logger.info("")
-    
-    app.run_polling(allowed_updates=['message', 'callback_query'])
-
-if __name__ == '__main__':
-    try:
-        main()
-    except KeyboardInterrupt:
-        logger.info("🛑 Bot stopped by user")
-    except Exception as e:
-        logger.error(f"❌ Critical error: {e}", exc_info=True)
+   
