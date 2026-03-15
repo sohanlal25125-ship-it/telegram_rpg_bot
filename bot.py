@@ -34,14 +34,14 @@ logger = logging.getLogger(__name__)
 os.makedirs('logs', exist_ok=True)
 
 # ============================================================================
-# IMPORT ALL HANDLERS
+# IMPORT ALL COMMAND HANDLERS
 # ============================================================================
 
 # Core
 from modules.core.start import start_handler
 from modules.core.help import help_handler
 from modules.core.profile import profile_handler
-from modules.core.settings import settings_handler, settings_callback_handler
+from modules.core.settings import settings_handler
 from modules.core.stats import stats_handler
 # Family
 from modules.family.family import family_handler
@@ -135,6 +135,18 @@ from modules.admin.adminstats import adminstats_handler
 from modules.admin.logs import logs_handler
 
 # ============================================================================
+# IMPORT ALL CALLBACK HANDLERS (CENTRALIZED)
+# ============================================================================
+
+from modules.callbacks import (
+    settings_callback_handler,
+    shop_callback_handler,
+    bank_callback_handler,
+    auction_callback_handler,
+    blackjack_callback_handler,
+)
+
+# ============================================================================
 # MAIN BOT FUNCTION
 # ============================================================================
 
@@ -155,7 +167,6 @@ def main():
     app.add_handler(help_handler)
     app.add_handler(profile_handler)
     app.add_handler(settings_handler)
-    app.add_handler(settings_callback_handler)
     app.add_handler(stats_handler)
     logger.info("✅ CORE: 6 commands")
     
@@ -269,7 +280,32 @@ def main():
     
     logger.info("")
     logger.info("=" * 80)
-    logger.info("✅ ALL 84+ HANDLERS REGISTERED SUCCESSFULLY!")
+    logger.info("📝 Registering callback handlers...")
+    logger.info("")
+    
+    # ========================================================================
+    # CALLBACK HANDLERS (INLINE BUTTONS) - NOW CENTRALIZED!
+    # ========================================================================
+    
+    app.add_handler(settings_callback_handler)
+    logger.info("✅ Settings callbacks registered")
+    
+    app.add_handler(shop_callback_handler)
+    logger.info("✅ Shop callbacks registered")
+    
+    app.add_handler(bank_callback_handler)
+    logger.info("✅ Bank callbacks registered")
+    
+    app.add_handler(auction_callback_handler)
+    logger.info("✅ Auction callbacks registered")
+    
+    app.add_handler(blackjack_callback_handler)
+    logger.info("✅ Blackjack callbacks registered")
+    
+    logger.info("")
+    logger.info("=" * 80)
+    logger.info("✅ ALL 84+ COMMAND HANDLERS REGISTERED!")
+    logger.info("✅ ALL CALLBACK HANDLERS REGISTERED!")
     logger.info("=" * 80)
     logger.info("")
     logger.info("📊 SUMMARY:")
@@ -277,7 +313,7 @@ def main():
     logger.info("   Crime: 8 | Factory: 6 | Garden: 9   | Market: 7")
     logger.info("   Games: 10| Stats: 6   | Admin: 5")
     logger.info("   ──────────────────────────────────")
-    logger.info("   📈 TOTAL: 84+ COMMANDS")
+    logger.info("   📈 TOTAL: 84+ COMMANDS + 5 CALLBACK MODULES")
     logger.info("")
     logger.info("🚀 BOT IS RUNNING AND READY!")
     logger.info("")
